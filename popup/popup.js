@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Manejo de los toggles de plataformas
-  const platforms = ['yt', 'tk', 'fb'];
+  const platforms = ['yt', 'tk', 'fb', 'ig'];
   
   platforms.forEach(platform => {
     const toggle = document.getElementById(`toggle-${platform}`);
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Cargar estadísticas
-  chrome.storage.local.get(['stats_yt', 'stats_tk', 'stats_fb', 'stats_total'], (result) => {
+  chrome.storage.local.get(['stats_yt', 'stats_tk', 'stats_fb', 'stats_ig', 'stats_total'], (result) => {
     document.getElementById('stat-yt').textContent = result.stats_yt || 0;
     document.getElementById('stat-tk').textContent = result.stats_tk || 0;
     const statFb = document.getElementById('stat-fb');

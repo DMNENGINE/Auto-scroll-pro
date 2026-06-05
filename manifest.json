@@ -20,6 +20,7 @@
     "default_popup": "popup/popup.html",
     "default_title": "Auto Scroll Pro"
   },
+  "options_page": "options/options.html",
   "background": {
     "service_worker": "background/background.js"
   },
@@ -37,6 +38,11 @@
     {
       "matches": ["*://*.facebook.com/*"],
       "js": ["content/facebook.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.instagram.com/*"],
+      "js": ["content/instagram.js"],
       "run_at": "document_end"
     }
   ]

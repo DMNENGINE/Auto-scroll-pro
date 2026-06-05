@@ -19,10 +19,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Manejo de fecha y límite diario
     const today = new Date().toDateString();
     
-    chrome.storage.local.get(['stats_yt', 'stats_tk', 'stats_fb', 'stats_total', 'scrolls_today', 'last_date', 'is_premium'], (result) => {
+    chrome.storage.local.get(['stats_yt', 'stats_tk', 'stats_fb', 'stats_ig', 'stats_total', 'scrolls_today', 'last_date', 'is_premium'], (result) => {
       let yt = result.stats_yt || 0;
       let tk = result.stats_tk || 0;
       let fb = result.stats_fb || 0;
+      let ig = result.stats_ig || 0;
       let total = result.stats_total || 0;
       let scrollsToday = result.scrolls_today || 0;
       let lastDate = result.last_date || today;
@@ -56,6 +57,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if (request.platform === 'yt') yt++;
       if (request.platform === 'tk') tk++;
       if (request.platform === 'fb') fb++;
+      if (request.platform === 'ig') ig++;
       total++;
       scrollsToday++;
 
@@ -63,6 +65,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         stats_yt: yt,
         stats_tk: tk,
         stats_fb: fb,
+        stats_ig: ig,
         stats_total: total,
         scrolls_today: scrollsToday,
         last_date: lastDate
