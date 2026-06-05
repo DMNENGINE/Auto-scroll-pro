@@ -213,7 +213,16 @@ function simulateScroll() {
     let btn = downBtnContainer.querySelector('button') || downBtnContainer;
     if (btn && typeof btn.click === 'function') { btn.click(); return; }
   }
-  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+  let video = getActiveYtVideo();
+  if (video) {
+    video.dispatchEvent(new WheelEvent('wheel', { deltaY: 1000, bubbles: true }));
+    const activeContainer = document.querySelector('ytd-reel-video-renderer[is-active]');
+    if (activeContainer && activeContainer.nextElementSibling) {
+      activeContainer.nextElementSibling.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+    }
+  }
 }
 
 function simulateScrollUp() {
@@ -222,7 +231,16 @@ function simulateScrollUp() {
     let btn = upBtnContainer.querySelector('button') || upBtnContainer;
     if (btn && typeof btn.click === 'function') { btn.click(); return; }
   }
-  window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+  let video = getActiveYtVideo();
+  if (video) {
+    video.dispatchEvent(new WheelEvent('wheel', { deltaY: -1000, bubbles: true }));
+    const activeContainer = document.querySelector('ytd-reel-video-renderer[is-active]');
+    if (activeContainer && activeContainer.previousElementSibling) {
+      activeContainer.previousElementSibling.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+    }
+  }
 }
 
 if ('mediaSession' in navigator) {

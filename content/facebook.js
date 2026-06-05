@@ -194,12 +194,14 @@ function initAutoScroll() {
 function simulateScroll() {
   let nextBtn = document.querySelector('[aria-label="Next reel"], [aria-label="Siguiente reel"]');
   if (nextBtn) { nextBtn.click(); return; }
+  document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', code: 'ArrowDown', keyCode: 40, bubbles: true }));
   window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
 }
 
 function simulateScrollUp() {
   let prevBtn = document.querySelector('[aria-label="Previous reel"], [aria-label="Reel anterior"]');
   if (prevBtn) { prevBtn.click(); return; }
+  document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', code: 'ArrowUp', keyCode: 38, bubbles: true }));
   window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
 }
 

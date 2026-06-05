@@ -206,15 +206,35 @@ function initAutoScroll() {
 function simulateScroll() {
   const downBtn = document.querySelector('[data-e2e="nav-down-button"], [data-e2e="arrow-right"]');
   if (downBtn) { downBtn.click(); return; }
-  const event = new WheelEvent('wheel', { deltaY: 1000, bubbles: true });
-  document.body.dispatchEvent(event);
+  
+  let video = getActiveTkVideo();
+  if (video) {
+    video.dispatchEvent(new WheelEvent('wheel', { deltaY: 1000, bubbles: true, cancelable: true }));
+    setTimeout(() => {
+      const allVideos = Array.from(document.querySelectorAll('video'));
+      const currentIndex = allVideos.indexOf(video);
+      if (currentIndex >= 0 && currentIndex + 1 < allVideos.length) {
+        allVideos[currentIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  }
 }
 
 function simulateScrollUp() {
   const upBtn = document.querySelector('[data-e2e="nav-up-button"], [data-e2e="arrow-left"]');
   if (upBtn) { upBtn.click(); return; }
-  const event = new WheelEvent('wheel', { deltaY: -1000, bubbles: true });
-  document.body.dispatchEvent(event);
+  
+  let video = getActiveTkVideo();
+  if (video) {
+    video.dispatchEvent(new WheelEvent('wheel', { deltaY: -1000, bubbles: true, cancelable: true }));
+    setTimeout(() => {
+      const allVideos = Array.from(document.querySelectorAll('video'));
+      const currentIndex = allVideos.indexOf(video);
+      if (currentIndex > 0) {
+        allVideos[currentIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+  }
 }
 
 if ('mediaSession' in navigator) {
