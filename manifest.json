@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "DMN_ENGINE",
+  "version": "1.0",
+  "description": "Auto Scroll Pro by DMN_ENGINE",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "alarms",
+    "notifications"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.tiktok.com/*",
+    "*://*.facebook.com/*",
+    "*://*.instagram.com/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Auto Scroll Pro"
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content/youtube.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.tiktok.com/*"],
+      "js": ["content/tiktok.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.facebook.com/*"],
+      "js": ["content/facebook.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
