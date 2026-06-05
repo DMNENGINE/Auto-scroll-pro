@@ -1,0 +1,20 @@
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# Archivos de empaquetado (Para no subir el zip al repo)
+*.zip
+*.crx
+*.tar.gz
+
+# Entornos y Editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
