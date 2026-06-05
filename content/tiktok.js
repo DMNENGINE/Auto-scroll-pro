@@ -202,3 +202,22 @@ function initAutoScroll() {
     });
   }, 1000);
 }
+
+function simulateScroll() {
+  const downBtn = document.querySelector('[data-e2e="nav-down-button"], [data-e2e="arrow-right"]');
+  if (downBtn) { downBtn.click(); return; }
+  const event = new WheelEvent('wheel', { deltaY: 1000, bubbles: true });
+  document.body.dispatchEvent(event);
+}
+
+function simulateScrollUp() {
+  const upBtn = document.querySelector('[data-e2e="nav-up-button"], [data-e2e="arrow-left"]');
+  if (upBtn) { upBtn.click(); return; }
+  const event = new WheelEvent('wheel', { deltaY: -1000, bubbles: true });
+  document.body.dispatchEvent(event);
+}
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.setActionHandler('nexttrack', () => simulateScroll());
+  navigator.mediaSession.setActionHandler('previoustrack', () => simulateScrollUp());
+}

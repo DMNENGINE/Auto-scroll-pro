@@ -206,3 +206,26 @@ function initAutoScroll() {
     }
   }, 1000);
 }
+
+function simulateScroll() {
+  let downBtnContainer = document.getElementById('navigation-button-down');
+  if (downBtnContainer) {
+    let btn = downBtnContainer.querySelector('button') || downBtnContainer;
+    if (btn && typeof btn.click === 'function') { btn.click(); return; }
+  }
+  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+}
+
+function simulateScrollUp() {
+  let upBtnContainer = document.getElementById('navigation-button-up');
+  if (upBtnContainer) {
+    let btn = upBtnContainer.querySelector('button') || upBtnContainer;
+    if (btn && typeof btn.click === 'function') { btn.click(); return; }
+  }
+  window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+}
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.setActionHandler('nexttrack', () => simulateScroll());
+  navigator.mediaSession.setActionHandler('previoustrack', () => simulateScrollUp());
+}

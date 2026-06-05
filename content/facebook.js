@@ -190,3 +190,20 @@ function initAutoScroll() {
     });
   }, 1000);
 }
+
+function simulateScroll() {
+  let nextBtn = document.querySelector('[aria-label="Next reel"], [aria-label="Siguiente reel"]');
+  if (nextBtn) { nextBtn.click(); return; }
+  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+}
+
+function simulateScrollUp() {
+  let prevBtn = document.querySelector('[aria-label="Previous reel"], [aria-label="Reel anterior"]');
+  if (prevBtn) { prevBtn.click(); return; }
+  window.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+}
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.setActionHandler('nexttrack', () => simulateScroll());
+  navigator.mediaSession.setActionHandler('previoustrack', () => simulateScrollUp());
+}
