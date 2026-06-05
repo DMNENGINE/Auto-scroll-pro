@@ -28,33 +28,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cargar estado guardado
     chrome.storage.local.get([`scroll_${platform}`], (result) => {
-      toggle.checked = result[`scroll_${platform}`] || false;
-      updateStatus(platform, toggle.checked);
+      if (toggle) {
+        toggle.checked = result[`scroll_${platform}`] || false;
+      }
+      updateStatus(platform, toggle ? toggle.checked : false);
     });
 
     // Guardar estado al cambiar
-    toggle.addEventListener('change', (e) => {
-      const isEnabled = e.target.checked;
-      chrome.storage.local.set({ [`scroll_${platform}`]: isEnabled });
-      updateStatus(platform, isEnabled);
-      
-      // Enviar mensaje al content script para activar/desactivar
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        if(tabs[0]) {
-          chrome.tabs.sendMessage(tabs[0].id, {
-            action: 'toggleAutoScroll', 
-            platform: platform, 
-            enabled: isEnabled
-          }).catch(() => {
-            // Error ignorado, el content script puede no estar inyectado
-          });
-        }
+    if (toggle) {
+      toggle.addEventListener('change', (e) => {
+        const isEnabled = e.target.checked;
+        chrome.storage.local.set({ [`scroll_${platform}`]: isEnabled });
+        updateStatus(platform, isEnabled);
+        
+        // Enviar mensaje al content script para activar/desactivar
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          if(tabs[0]) {
+            chrome.tabs.sendMessage(tabs[0].id, {
+              action: 'toggleAutoScroll', 
+              platform: platform, 
+              enabled: isEnabled
+            }).catch(() => {
+              // Error ignorado, el content script puede no estar inyectado
+            });
+          }
+        });
       });
-    });
+    }
   });
 
   function updateStatus(platform, isEnabled) {
     const statusBox = document.getElementById(`status-${platform}`);
+    if (!statusBox) return;
     if(isEnabled) {
       statusBox.className = 'status-box success';
       statusBox.textContent = 'Auto-scroll ACTIVADO';
